@@ -1,0 +1,28 @@
+
+let STG_X = GetStgFrameWidth();
+let STG_Y = GetStgFrameHeight();
+
+let CENTER_X = STG_X / 2;
+let CENTER_Y = STG_Y / 2;
+
+
+let FRAME;
+
+task InitFrameCounter()
+{
+  FRAME = 0;
+  while (true)
+  {
+    FRAME++;
+    yield;
+  }
+}
+
+function Wait(t)
+{
+  while (t > 0)
+  {
+    t--;
+    yield;
+  }
+}

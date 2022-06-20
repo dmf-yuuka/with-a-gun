@@ -1,0 +1,22 @@
+
+#include "../lib/global.dnh"
+
+let TH_ARC = 180;
+
+task TShotHoop(obj_src, k, v, sid, da)
+{
+  Wait(da);
+  while (!Obj_IsDeleted(obj_src))
+  {
+    let n = 0;
+    while (n < k)
+    {
+      let th = n * TH_ARC / (k - 1);
+      CreateShotA1(
+        ObjMove_GetX(obj_src), ObjMove_GetY(obj_src),
+        v, th, sid, 0);
+      n++;
+    }
+    Wait(da);
+  }
+}

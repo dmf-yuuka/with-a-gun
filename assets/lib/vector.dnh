@@ -1,0 +1,48 @@
+
+
+function v_add(a, b)
+{
+  return [a[0] + b[0], a[1] + b[1]]
+}
+
+function v_sub(a, b)
+{
+  return [a[0] - b[0], a[1] - b[1]]
+}
+
+function v_scal(v, s)
+{
+  return [v[0] * s, v[1] * s]
+}
+
+function v_scal_inv(v, s)
+{
+  return [v[0] / s, v[1] / s]
+}
+
+function v_mul(a, b)
+{
+  return [a[0] * b[0], a[1] * b[1]]
+}
+
+function v_mul_inv(a, b)
+{
+  return [a[0] / b[0], a[1] / b[1]]
+}
+
+
+function v_range(v, v_min, v_max)
+{
+  return [
+      min(max(v[0], v_min[0]), v_max[0]),
+      min(max(v[1], v_min[1]), v_max[1])
+  ]
+}
+
+function v_rand(v_min, v_max)
+{
+  return [
+      rand(v_min[0], v_max[0]),
+      rand(v_min[0], v_max[1])
+  ]
+}

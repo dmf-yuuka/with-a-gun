@@ -1,0 +1,29 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["S0"]
+#Text["Todo: this is dumb"]
+
+#include "script/default_system/Default_ShotConst.txt"
+
+#include "../assets/lib/global.dnh"
+#include "../assets/lib/vector.dnh"
+#include "../assets/lib/win.dnh"
+#include "../assets/char/spinner.dnh"
+#include "../assets/motion/random.dnh"
+#include "../assets/shot/hoop.dnh"
+
+
+@MainLoop { yield; }
+
+@Initialize {
+  InitFrameCounter();
+  let spinner = TSpinner();
+  TMotionRandom(spinner, 32, 60, 120);
+  TShotHoop(spinner, 9, 1, DS_BALL_L_RED, 160);
+}
+
+@Event {
+  alternative(GetEventType())
+  case (EV_REQUEST_LIFE) { SetScriptResult(4000); }
+  case (EV_REQUEST_TIMER) { SetScriptResult(182); }
+}

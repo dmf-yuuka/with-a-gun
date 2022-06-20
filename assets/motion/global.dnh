@@ -1,0 +1,8 @@
+
+function UpdateHitbox(obj, r) {
+  let ex = ObjMove_GetX(obj);
+  let ey = ObjMove_GetY(obj);
+  ObjEnemy_SetIntersectionCircleToShot(obj, ex, ey, r);
+  ObjEnemy_SetIntersectionCircleToPlayer(obj, ex, ey, r);
+  return [ex, ey];
+}

@@ -1,0 +1,57 @@
+
+let IMG_ENEMY = GetCurrentScriptDirectory() ~ "../img/spinner.png";
+let ALPHA = 0.5;
+
+function TSpinner()
+{
+  let objBoss = ObjEnemy_Create(OBJ_ENEMY_BOSS);
+  ObjEnemy_Regist(objBoss);
+  TAnimateSpinner(objBoss);
+  TBossCleanup(objBoss);
+  return objBoss;
+}
+
+task TAnimateSpinner(obj)
+{
+  let objOverlay = ObjPrim_Create(OBJ_SPRITE_2D);
+  ObjPrim_SetTexture(objOverlay, IMG_ENEMY);
+  ObjSprite2D_SetSourceRect(objOverlay, 1, 1, 32, 32);
+  ObjSprite2D_SetDestCenter(objOverlay);
+  ObjRender_SetAlpha(objOverlay, ALPHA * 255);
+
+  let objUnderlay = ObjPrim_Create(OBJ_SPRITE_2D);
+  ObjPrim_SetTexture(objUnderlay, IMG_ENEMY);
+  ObjSprite2D_SetSourceRect(objUnderlay, 1, 1, 32, 32);
+  ObjSprite2D_SetDestCenter(objUnderlay);
+  ObjRender_SetAlpha(objUnderlay, ALPHA * 126);
+
+  let theta = 0;
+
+  while (ObjEnemy_GetInfo (obj, INFO_LIFE) > 0)
+  {
+    let ex = ObjMove_GetX(obj);
+    let ey = ObjMove_GetY(obj);
+
+    ObjRender_SetAngleZ(objOverlay, theta);
+    ObjRender_SetAngleZ(objUnderlay, -theta);
+    ObjRender_SetPosition(objOverlay, ex, ey, 0);
+    ObjRender_SetPosition(objUnderlay, ex, ey, 0);
+
+    theta = (theta + 4) % 360;
+    yield;
+  }
+
+  Obj_Delete(objOverlay);
+  Obj_Delete(objUnderlay);
+}
+
+task TBossCleanup(obj)
+{
+  while (ObjEnemy_GetInfo(obj, INFO_LIFE) > 0)
+  {
+    yield;
+  }
+
+  DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+  Obj_Delete(obj);
+}

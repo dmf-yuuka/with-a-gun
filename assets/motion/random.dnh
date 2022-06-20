@@ -1,0 +1,30 @@
+
+#include "./global.dnh"
+#include "../lib/global.dnh"
+#include "../lib/vector.dnh"
+
+
+let V_MIN = [STG_X / 6, STG_Y / 12];
+let V_MAX = [STG_X - V_MIN[0], STG_Y / 4];
+
+let V_CENTER = v_add(V_MIN, v_scal_inv(v_sub(V_MAX, V_MIN), 2));
+let V_DMAX = v_scal_inv(v_sub(V_MAX, V_MIN), 4);
+let V_NEG_DMAX = v_scal(V_DMAX, -1);
+
+task TMotionRandom(obj, r, td, ts)
+{
+  ObjMove_SetDestAtFrame(obj, V_CENTER[0], V_CENTER[1], td);
+
+  while (!Obj_IsDeleted(obj))
+  {
+    let e = UpdateHitbox(obj, r);
+
+    if (FRAME % (td + ts) == (td + ts - 1))
+    {
+      let d = v_rand(V_NEG_DMAX, V_DMAX);
+      e = v_range(v_add(e, d), V_MIN, V_MAX);
+      ObjMove_SetDestAtFrame(obj, e[0], e[1], td);
+    }
+    yield;
+  }
+}
